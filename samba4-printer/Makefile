@@ -4,7 +4,7 @@ include $(TOPDIR)/rules.mk
 PKG_NAME:=samba-printer
 PKG_VERSION:=4.18.11
 PKG_RELEASE:=1
-
+PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-printer-$(PKG_VERSION)
 PKG_SOURCE:=samba-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:= \
 		https://ftp.gwdg.de/pub/samba/stable/ \
