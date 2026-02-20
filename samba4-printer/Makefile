@@ -1,12 +1,9 @@
 # Based partially on (wongsyrone/hbl0307106015) versions
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=samba-printer
+PKG_NAME:=samba
 PKG_VERSION:=4.18.11
 PKG_RELEASE:=1
-
-PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
-PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
 
 PKG_SOURCE:=samba-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:= \
@@ -49,7 +46,7 @@ include $(TOPDIR)/feeds/packages/lang/python/python3-host.mk
 include $(TOPDIR)/feeds/packages/lang/python/python3-package.mk
 include $(TOPDIR)/feeds/packages/lang/perl/perlver.mk
 
-define Package/samba-printer/Default
+define Package/samba/Default
   SECTION:=net
   CATEGORY:=CAT
   TITLE:=Samba-Printer $(PKG_VERSION)
@@ -65,7 +62,7 @@ define Package/samba-printer/Default/description
 endef
 
 define Package/samba4-printer-libs
-  $(call Package/$(PKG_NAME)/Default)
+  $(call Package/samba/Default)
   TITLE+= libs
   DEPENDS:= +libtirpc +libreadline +libpopt +libcap +zlib +libgnutls +libtasn1 +libuuid +libopenssl +libpthread +libcups +KERNEL_IO_URING:liburing \
 	+PACKAGE_libpam:libpam \
@@ -75,7 +72,7 @@ define Package/samba4-printer-libs
 endef
 
 define Package/samba4-printer-server
-  $(call Package/$(PKG_NAME)/Default)
+  $(call Package/samba/Default)
   TITLE+= server
   DEPENDS:= +samba4-printer-libs
   CONFLICTS:=samba36-server
@@ -94,7 +91,7 @@ define Package/samba4-printer-server/config
 endef
 
 define Package/samba4-printer-client
-  $(call Package/$(PKG_NAME)/Default)
+  $(call Package/samba/Default)
   TITLE+= client
   DEPENDS:= +samba4-printer-libs
 endef
@@ -106,7 +103,7 @@ define Package/samba4-printer-client/description
 endef
 
 define Package/samba4-printer-admin
-  $(call Package/$(PKG_NAME)/Default)
+  $(call Package/samba/Default)
   TITLE+= admin tools
   DEPENDS:= +samba4-printer-libs
 endef
@@ -120,7 +117,7 @@ define Package/samba4-printer-admin/description
 endef
 
 define Package/samba4-printer-utils
-  $(call Package/$(PKG_NAME)/Default)
+  $(call Package/samba/Default)
   TITLE+= utils
   DEPENDS:= +samba4-printer-libs
 endef
