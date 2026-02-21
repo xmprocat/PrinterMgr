@@ -1,0 +1,11 @@
+{
+  "luci-app-PrinterMgr": {
+    "description": "Grant UCI access for luci-app-PrinterMgr",
+    "read": {
+      "uci": [ "cupsd", "samba4" ]
+    },
+    "write": {
+      "uci": [ "cupsd", "samba4" ]
+    }
+  }
+}

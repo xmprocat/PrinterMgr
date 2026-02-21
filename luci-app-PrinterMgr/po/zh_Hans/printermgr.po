@@ -1,0 +1,30 @@
+# Chinese (simplified) translation for printermgr.
+msgid ""
+msgstr ""
+"Project-Id-Version: PrinterMgr\n"
+"Report-Msgid-Bugs-To: y6518@live.com\n"
+"Last-Translator: xmprocat <y6518@live.com>\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Bugs: Report translation errors to the Language-Team address.\n"
+
+msgid "Printer Manager"
+msgstr "打印机管理"
+
+msgid "Printer Manager is used to manage the CUPS printing service and Samba printing/sharing service."
+msgstr "PrinterMgr 用于管理 CUPS 打印服务和 Samba 打印/共享服务。"
+
+msgid "CUPS - Global Settings"
+msgstr "CUPS 全局设置"
+
+msgid "Enable CUPS"
+msgstr "启用 CUPS"
+
+msgid "Web Management Port"
+msgstr "WEB 管理端口"
+
+msgid "You can set any unused port. It does not affect the internal operation of CUPS."
+msgstr "可以设置为任意未占用端口，不影响 CUPS 的内部运行。"

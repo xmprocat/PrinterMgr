@@ -1,0 +1,89 @@
+<script type="text/javascript">
+function updateStatus() {
+  fetch(L.url("admin/services/printermgr_status"))
+    .then(r => r.json())
+    .then(json => {
+      // CUPS
+      document.getElementById("cups_inst").textContent = json.cupsd.installed ? "yes" : "no";
+      document.getElementById("cups_run").textContent = json.cupsd.running ? "running" : "stopped";
+      document.getElementById("cups_btn_enable").disabled = !!json.cupsd.running;
+      document.getElementById("cups_btn_disable").disabled = !json.cupsd.running;
+
+      // Show/hide "Open CUPS Web UI" button when CUPS is running
+      var uiBtn = document.getElementById("cups_btn_ui");
+      if (json.cupsd.running) {
+        // determine port (fallback to 631)
+        var port = Number(json.cupsd.port) || 631;
+        // use current page protocol to avoid mixed-content blocking when possible
+        var proto = window.location.protocol ? window.location.protocol : "http:";
+        uiBtn.style.display = "";
+        uiBtn.onclick = function() {
+          var url = proto + "//" + window.location.hostname + ":" + port + "/";
+          window.open(url, "_blank");
+        };
+      } else {
+        uiBtn.style.display = "none";
+        uiBtn.onclick = null;
+      }
+
+      // Samba
+      document.getElementById("smb_inst").textContent = json.samba.installed ? "yes" : "no";
+      document.getElementById("smb_run").textContent = json.samba.running ? "running" : "stopped";
+      document.getElementById("smb_btn_enable").disabled = !!json.samba.running;
+      document.getElementById("smb_btn_disable").disabled = !json.samba.running;
+    })
+    .catch(e => {
+      console.log("status fetch error", e);
+    });
+}
+
+function doToggle(svc, action) {
+  fetch(L.url("admin/services/printermgr_" + action), {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: "service=" + encodeURIComponent(svc)
+  })
+    .then(r => r.json())
+    .then(res => {
+      if (!res.ok) {
+        alert("Operation failed: " + (res.msg || ""));
+      }
+      updateStatus();
+    })
+    .catch(e => {
+      console.log("toggle error", e);
+      alert("Operation failed (network).");
+      updateStatus();
+    });
+}
+
+window.addEventListener("load", function() {
+  updateStatus();
+  setInterval(updateStatus, 8000);
+});
+</script>
+
+<h2><%: Printer Manager %></h2>
+<table class="table">
+  <tr><th>Service</th><th>Installed</th><th>State</th><th>Actions</th></tr>
+  <tr>
+    <td>CUPS (cupsd)</td>
+    <td id="cups_inst">-</td>
+    <td id="cups_run">-</td>
+    <td>
+      <button id="cups_btn_enable" class="cbi-button cbi-button-apply" onclick="doToggle('cupsd','enable')">Enable</button>
+      <button id="cups_btn_disable" class="cbi-button" onclick="doToggle('cupsd','disable')">Disable</button>
+      <!-- 仅当 CUPS 正在运行时显示 -->
+      <button id="cups_btn_ui" class="cbi-button" style="display:none; margin-left:6px;">Open CUPS Web UI</button>
+    </td>
+  </tr>
+  <tr>
+    <td>Samba (smbd)</td>
+    <td id="smb_inst">-</td>
+    <td id="smb_run">-</td>
+    <td>
+      <button id="smb_btn_enable" class="cbi-button cbi-button-apply" onclick="doToggle('samba','enable')">Enable</button>
+      <button id="smb_btn_disable" class="cbi-button" onclick="doToggle('samba','disable')">Disable</button>
+    </td>
+  </tr>
+</table>
