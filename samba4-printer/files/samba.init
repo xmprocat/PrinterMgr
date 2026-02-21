@@ -1,4 +1,5 @@
 #!/bin/sh /etc/rc.common
+# mod by 2026-  xmprocat  <y6518@live.com> https://github.com/xmprocat/PrinterMgr
 
 START=98
 STOP=05
@@ -165,9 +166,12 @@ init_config() {
 	[ -d /var/lock ] || mkdir -m 755 -p /var/lock
 	[ -d /var/run/samba ] || mkdir -p /var/run/samba
 	[ -d /var/log/samba ] || mkdir -p /var/log/samba
+	[ -d /srv/samba/print_drivers ] || mkdir -m 777 -p /srv/samba/print_drivers
+	[ -d /srv/samba/print_spool ] || mkdir -m 777 -p /srv/samba/print_spool
 	chmod 0755 /var/lock
 	chmod 0755 /var/lib/samba
 	chmod 0755 /var/cache/samba
+	chmod 0777 /srv/samba/print_spool
 
 	config_load samba4
 	config_foreach smb_header samba

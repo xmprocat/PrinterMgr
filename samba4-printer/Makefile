@@ -1,4 +1,5 @@
 # Based partially on (wongsyrone/hbl0307106015) versions
+# mod by 2026-  xmprocat  <y6518@live.com> https://github.com/xmprocat/PrinterMgr
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=samba
