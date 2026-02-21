@@ -8,7 +8,7 @@
 include $(TOPDIR)/rules.mk
 
 LUCI_TITLE:=LuCI Support for printer manager
-LUCI_DEPENDS:= +cups +samba4-printer
+LUCI_DEPENDS:= +cups
 PKG_VERSION:=1.4
 
 include $(TOPDIR)/feeds/luci/luci.mk
